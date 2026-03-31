@@ -1056,6 +1056,7 @@
       reference: ref,
       consent: 'Yes',
       signature: hasSig ? 'Yes' : 'No',
+      name: document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value,
       message: 'New Credit Authorization Form submitted.\n\nReference: ' + ref +
         '\nName: ' + document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value +
         '\nDOB: ' + document.getElementById('dob').value +
@@ -1066,6 +1067,11 @@
         '\nEIN: ' + document.getElementById('ein').value +
         '\nPrinted Name: ' + document.getElementById('printedName').value +
         '\nConsent: Yes\nSignature Provided: ' + (hasSig ? 'Yes' : 'No')
+    }).then(function(response) {
+      console.log('EmailJS SUCCESS:', response.status, response.text);
+    }, function(error) {
+      console.error('EmailJS FAILED:', JSON.stringify(error));
+      alert('Form submitted but email delivery failed. Error: ' + JSON.stringify(error));
     });
 
     // Show success
