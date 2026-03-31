@@ -1035,6 +1035,32 @@
     const ref = 'CFG-' + today.getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
     document.getElementById('refNumber').textContent = 'Reference: ' + ref;
 
+    // Collect form data and send to Formspree
+    const formData = new FormData();
+    formData.append('_subject', 'New Credit Authorization — ' + ref);
+    formData.append('First Name', document.getElementById('firstName').value);
+    formData.append('Last Name', document.getElementById('lastName').value);
+    formData.append('Date of Birth', document.getElementById('dob').value);
+    formData.append('SSN', document.getElementById('ssn').value);
+    formData.append('Email', document.getElementById('email').value);
+    formData.append('Phone', document.getElementById('phone').value);
+    formData.append('Address', document.getElementById('address').value);
+    formData.append('City', document.getElementById('city').value);
+    formData.append('State', document.getElementById('state').value);
+    formData.append('ZIP', document.getElementById('zip').value);
+    formData.append('Business Name', document.getElementById('businessName') ? document.getElementById('businessName').value : '');
+    formData.append('EIN / Tax ID', document.getElementById('ein').value);
+    formData.append('Printed Name', document.getElementById('printedName').value);
+    formData.append('Reference Number', ref);
+    formData.append('Consent Checked', 'Yes');
+    formData.append('Signature Provided', hasSig ? 'Yes' : 'No');
+
+    fetch('https://formspree.io/f/xdapgqgk', {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+
     // Show success
     document.getElementById('formContent').classList.add('hide');
     document.getElementById('successOverlay').classList.add('show');
