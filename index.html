@@ -1421,7 +1421,7 @@
     <li><a href="#testimonials">Reviews</a></li>
     <li><a href="#team">Team</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="#hero" class="nav-phone">&#9990; 815-949-8860</a></li>
+    <li><a href="#hero" class="nav-phone">&#9990; 815-949-8860 | 708-942-1306</a></li>
     <li style="display:flex; align-items:center; gap:8px;">
       <a href="https://www.facebook.com/profile.php?id=100091982656453" target="_blank" rel="noopener" aria-label="Facebook" style="width:32px; height:32px; background:rgba(255,255,255,0.08); border-radius:6px; display:flex; align-items:center; justify-content:center; transition:background 0.2s;" onmouseover="this.style.background='rgba(201,168,76,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
         <svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:#c9a84c;"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
@@ -1449,7 +1449,7 @@
       <p class="hero-tagline">Capital Funding Group delivers fast, flexible funding solutions for businesses and commercial real estate investors across the nation.</p>
       <div class="hero-btns">
         <a href="https://www.cognitoforms.com/CapitalFunding1/CapitalFundingGroupBusinessFundingApplicationForm" target="_blank" class="btn-primary">Get Started Today &#8594;</a>
-        <a href="tel:8159498860" class="btn-outline">&#9990; Call 815-949-8860</a>
+        <a href="tel:8159498860" class="btn-outline">&#9990; 815-949-8860 | 708-942-1306</a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat">
@@ -1580,8 +1580,8 @@
           <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         </div>
         <h3>Commercial Real Estate</h3>
-        <p>Acquisition, refinancing, and construction loans for commercial properties. We fund office buildings, retail spaces, industrial, and multifamily assets.</p>
-        <div class="service-detail">From $250K &bull; Nationwide &#8594;</div>
+        <p>Acquisition, refinancing, and construction loans for commercial and investment properties. We fund office buildings, retail spaces, industrial, multifamily assets, single family investment properties, and condos.</p>
+        <div class="service-detail">Nationwide &bull; All property types &#8594;</div>
       </div>
 
       <div class="service-card" style="background:var(--navy); border-color: var(--navy);">
@@ -1602,8 +1602,16 @@
   <div class="section-inner">
     <div class="section-tag">Funding Calculator</div>
     <h2 class="section-title" style="color:#fff;">Estimate Your Payment</h2>
-    <p class="section-subtitle">Use our calculator for a quick estimate. Your actual terms may vary — speak with a specialist for a precise quote.</p>
-    <div class="calc-wrap">
+    <p class="section-subtitle">Use our calculators for a quick estimate. Your actual terms may vary — speak with a specialist for a precise quote.</p>
+
+    <!-- Calculator Tabs -->
+    <div style="display:flex; gap:0; margin-bottom:32px; border-radius:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.12); width:fit-content;">
+      <button id="tabLoan" onclick="switchCalc('loan')" style="background:var(--gold); color:var(--navy); border:none; padding:12px 28px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer;">Loan Calculator</button>
+      <button id="tabDscr" onclick="switchCalc('dscr')" style="background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.7); border:none; padding:12px 28px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer;">DSCR Calculator</button>
+    </div>
+
+    <!-- Loan Calculator -->
+    <div id="loanCalc" class="calc-wrap">
       <div class="calc-card">
         <div class="calc-field">
           <label>Loan Amount <span id="loanAmtOut">$100,000</span></label>
@@ -1648,6 +1656,55 @@
         <div class="calc-disclaimer">This calculator provides estimates for illustrative purposes only and does not constitute a loan offer or commitment. Actual rates, fees, and terms are subject to credit approval and may vary based on individual circumstances.</div>
       </div>
     </div>
+
+    <!-- DSCR Calculator -->
+    <div id="dscrCalc" class="calc-wrap" style="display:none;">
+      <div class="calc-card">
+        <div class="calc-field">
+          <label>Gross Monthly Rental Income <span id="dscrIncomeOut">$3,000</span></label>
+          <input type="range" id="dscrIncome" min="500" max="20000" step="100" value="3000" oninput="dscrUpdate()">
+        </div>
+        <div class="calc-field">
+          <label>Monthly Mortgage Payment (PITIA) <span id="dscrMortgageOut">$2,000</span></label>
+          <input type="range" id="dscrMortgage" min="250" max="15000" step="50" value="2000" oninput="dscrUpdate()">
+        </div>
+        <div class="calc-field">
+          <label>Annual Property Taxes <span id="dscrTaxOut">$3,600</span></label>
+          <input type="range" id="dscrTax" min="0" max="24000" step="100" value="3600" oninput="dscrUpdate()">
+        </div>
+        <div class="calc-field">
+          <label>Annual Insurance <span id="dscrInsOut">$1,200</span></label>
+          <input type="range" id="dscrIns" min="0" max="12000" step="100" value="1200" oninput="dscrUpdate()">
+        </div>
+        <div class="calc-results">
+          <div class="calc-result-card featured">
+            <div class="calc-result-label">DSCR Ratio</div>
+            <div class="calc-result-value" id="dscrRatio">1.35</div>
+          </div>
+          <div class="calc-result-card">
+            <div class="calc-result-label">Monthly NOI</div>
+            <div class="calc-result-value" id="dscrNOI">$2,700</div>
+          </div>
+          <div class="calc-result-card">
+            <div class="calc-result-label">Loan Eligible</div>
+            <div class="calc-result-value" id="dscrEligible" style="font-size:22px;">✓ Yes</div>
+          </div>
+        </div>
+      </div>
+      <div class="calc-info">
+        <h3>What is DSCR?</h3>
+        <p>The Debt Service Coverage Ratio (DSCR) measures a property's ability to cover its loan payments using rental income. Lenders use it to qualify investment property loans without requiring personal income verification.</p>
+        <p><strong style="color:var(--gold);">DSCR Formula:</strong> Monthly Rental Income ÷ Monthly Debt Service (PITIA)</p>
+        <ul style="list-style:none; margin:0 0 28px; display:flex; flex-direction:column; gap:10px;">
+          <li style="font-size:14px; color:rgba(255,255,255,0.6); display:flex; gap:8px; align-items:center;"><span style="color:var(--gold); font-weight:700;">✓</span> DSCR ≥ 1.25 — Strong approval likelihood</li>
+          <li style="font-size:14px; color:rgba(255,255,255,0.6); display:flex; gap:8px; align-items:center;"><span style="color:var(--gold); font-weight:700;">~</span> DSCR 1.0–1.24 — Possible with compensating factors</li>
+          <li style="font-size:14px; color:rgba(255,255,255,0.6); display:flex; gap:8px; align-items:center;"><span style="color:#e05c5c; font-weight:700;">✗</span> DSCR &lt; 1.0 — Property cash flow insufficient</li>
+        </ul>
+        <a href="#apply" class="btn-primary">Apply for a DSCR Loan &#8594;</a>
+        <div class="calc-disclaimer">DSCR calculations are estimates only. Final qualification is subject to full underwriting review including credit, property appraisal, and lender guidelines.</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1897,7 +1954,7 @@
             What is the maximum loan amount?
             <span class="faq-icon" aria-hidden="true">+</span>
           </button>
-          <div class="faq-answer" id="faq7" role="region">For business loans, we fund up to $5 million. For commercial real estate, we handle transactions from $250,000 to $20 million+. Contact us for deals outside these ranges — we have lender relationships for special situations.</div>
+          <div class="faq-answer" id="faq7" role="region">For business loans, we fund up to $5 million. For commercial real estate — including office, retail, multifamily, single family investment properties, and condos — we handle transactions of all sizes nationwide. Contact us for specific deal parameters.</div>
         </div>
       </div>
       <div class="faq-cta-panel">
@@ -1906,7 +1963,7 @@
         <a href="#apply" class="btn-primary">Apply Online Now &#8594;</a>
         <div>
           <div class="faq-phone-label">Or call us directly</div>
-          <a href="tel:8159498860" class="faq-phone">&#9990; 815-949-8860</a>
+          <a href="tel:8159498860" class="faq-phone">&#9990; 815-949-8860 | 708-942-1306</a>
         </div>
         <div style="margin-top:28px; padding-top:24px; border-top: 1px solid rgba(255,255,255,0.08);">
           <p style="font-size:13px; color:rgba(255,255,255,0.4); line-height:1.7;">Available Monday–Friday 8am–7pm CST. We respond to all inquiries within one business day.</p>
@@ -1931,7 +1988,7 @@
             </div>
             <div>
               <div style="font-size:12px; color:var(--mid-gray); margin-bottom:2px;">Phone</div>
-              <a href="tel:8159498860" style="color:var(--dark-text); font-weight:600; font-size:18px; font-family:'Playfair Display',serif;">815-949-8860</a>
+              <a href="tel:8159498860" style="color:var(--dark-text); font-weight:600; font-size:18px; font-family:'Playfair Display',serif;">815-949-8860 | 708-942-1306</a>
             </div>
           </div>
           <div class="apply-contact-item">
@@ -2036,7 +2093,7 @@
           <span class="footer-logo-text">Capital <span>Funding</span> Group</span>
         </div>
         <p class="footer-tagline">Your trusted source for business and commercial real estate loans. Fast approvals, flexible terms, nationwide reach.</p>
-        <a href="tel:8159498860" class="footer-phone">&#9990; 815-949-8860</a>
+        <a href="tel:8159498860" class="footer-phone">&#9990; 815-949-8860 | 708-942-1306</a>
         <div style="display:flex; gap:12px; margin-top:24px;">
           <a href="https://www.facebook.com/profile.php?id=100091982656453" target="_blank" rel="noopener" style="width:38px; height:38px; background:rgba(255,255,255,0.08); border-radius:8px; display:flex; align-items:center; justify-content:center; transition:background 0.2s;" onmouseover="this.style.background='rgba(201,168,76,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'" aria-label="Facebook">
             <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#c9a84c;"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
@@ -2089,6 +2146,56 @@
 </footer>
 
 <script>
+function switchCalc(type) {
+  if (type === 'loan') {
+    document.getElementById('loanCalc').style.display = 'grid';
+    document.getElementById('dscrCalc').style.display = 'none';
+    document.getElementById('tabLoan').style.background = 'var(--gold)';
+    document.getElementById('tabLoan').style.color = 'var(--navy)';
+    document.getElementById('tabDscr').style.background = 'rgba(255,255,255,0.06)';
+    document.getElementById('tabDscr').style.color = 'rgba(255,255,255,0.7)';
+  } else {
+    document.getElementById('loanCalc').style.display = 'none';
+    document.getElementById('dscrCalc').style.display = 'grid';
+    document.getElementById('tabDscr').style.background = 'var(--gold)';
+    document.getElementById('tabDscr').style.color = 'var(--navy)';
+    document.getElementById('tabLoan').style.background = 'rgba(255,255,255,0.06)';
+    document.getElementById('tabLoan').style.color = 'rgba(255,255,255,0.7)';
+    dscrUpdate();
+  }
+}
+
+function dscrUpdate() {
+  var income = parseInt(document.getElementById('dscrIncome').value);
+  var mortgage = parseInt(document.getElementById('dscrMortgage').value);
+  var tax = parseInt(document.getElementById('dscrTax').value);
+  var ins = parseInt(document.getElementById('dscrIns').value);
+
+  document.getElementById('dscrIncomeOut').textContent = '$' + income.toLocaleString();
+  document.getElementById('dscrMortgageOut').textContent = '$' + mortgage.toLocaleString();
+  document.getElementById('dscrTaxOut').textContent = '$' + tax.toLocaleString();
+  document.getElementById('dscrInsOut').textContent = '$' + ins.toLocaleString();
+
+  var monthlyExpenses = mortgage + (tax / 12) + (ins / 12);
+  var noi = income - (tax / 12) - (ins / 12);
+  var dscr = monthlyExpenses > 0 ? (income / monthlyExpenses) : 0;
+
+  document.getElementById('dscrRatio').textContent = dscr.toFixed(2);
+  document.getElementById('dscrNOI').textContent = '$' + Math.round(noi).toLocaleString();
+
+  var eligibleEl = document.getElementById('dscrEligible');
+  if (dscr >= 1.25) {
+    eligibleEl.textContent = '✓ Yes';
+    eligibleEl.style.color = '#4caf50';
+  } else if (dscr >= 1.0) {
+    eligibleEl.textContent = '~ Possibly';
+    eligibleEl.style.color = 'var(--gold)';
+  } else {
+    eligibleEl.textContent = '✗ No';
+    eligibleEl.style.color = '#e05c5c';
+  }
+}
+
 function calcUpdate() {
   var amt = parseInt(document.getElementById('loanAmt').value);
   var rate = parseFloat(document.getElementById('rate').value);
